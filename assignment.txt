@@ -1,0 +1,159 @@
+Maybern - Engineering Challenge
+For your take-home assessment, you’ll be building a waterfall engine. A waterfall is a
+method by which the profits from investments are distributed among the vario
+stakeholders involved. This distribution structure specifies the order and rules for h
+returns are shared between limited partners (LPs), who are typically the investors
+providing the capital, and the general partners (GPs), who manage the private equity
+fund.
+For this exercise, you will build a 4-tier waterfall with an 8% hurdle, 100% catch-up, and
+80/20 split for the final tie
+
+Key Concepts
+Return of Capital
+The first priority in most waterfall structures is to return the original investment to t
+LPs. Before any profits are distributed, the initial capital contributions are typically pa
+back. This means for every dollar invested by LP, the LP is entitled to a dollar back, so if
+an LP makes a $1000 contribution the GP needs to return $1000 before capital can fl
+to the next tier.
+Preferred Return (Hurdle Rate)
+After the return of capital, the next step is usually the preferred return, which is a
+specified rate of return that the LPs are entitled to receive before the GPs c
+participate in further profit sharing. For this exercise, we’ll use a rate of 8%, whi
+means the investment must achieve a return of 8% before the GPs can receive their
+share of the profit
+The formula for calculating preferred return is as follows,
+
+C * (1 + R)
+(d/365)
+
+C = cash flow
+d = the number of days
+R = pref rate
+
+For example, if an investor contributed $1000 on 01/01/2019 the amount of pref they
+would be owed on 01/01/2020 assuming an 8% IRR hurdle rate would be.
+
+$1000 * (1 + . 08)
+
+(365/365) = $1080
+
+This means they would need to return $1000 of ROC and $80 of preferred return to
+progress to the catch-up tier.
+Catch-Up Tier
+This stage allows the GPs to "catch up" with the LPs in terms of total profits. Once t
+LPs have received their preferred return, the GPs may receive a large percentage of the
+subsequent distributions until they have received a specified proportion of the tot
+profits, usually making the total distributions proportional to the agreed-upon split (e.g
+80% LPs, 20% GPs).
+Our waterfall will be configured with a 100% catch-up and a final split of 80/20 wit
+going to the LP and 20% going to the GP.
+The formula for calculating the total amount in the catch-up tier is as follows.
+
+CU = ci% * PR/(cu% − ci%)
+CU = 20%/(100% − 20%) * PR
+
+CU = 25% PR
+
+CU = Catch up amount
+cu% =catch-up percentage rate
+ci% =carried interest percentage rate
+PR = preferred return
+
+Final Split
+This is the profit share that the GPs receive beyond the preferred return and catch-
+tranches. Carried interest is typically set at a percentage of the profits (commonly 20
+and is meant to incentivize the GPs to maximize the returns from their investments.
+
+Tables
+Commitment
+A Commitment represents an ownership stake in the investment, in the example below
+both Nate and Cooper each have an investment for 1M and 2M respectively in fund #1.
+For this exercise, you can ignore the fund concept and focus on running waterfalls at the
+commitment level.
+
+entity_name id fund_id commitment_amount
+Nate Cooper 1 1 $1,000,000
+Cooper Smith 2 1 $2,000,000
+
+Transactions
+During the life of an investment, the LP will contribute money to the investment and
+periodically receive distributions depending on the investment's performance. The
+amount they can call is limited to the investor commitment.
+
+Note: Contributions are stored as negatives and distributions are stored as positives.
+
+transaction_date transaction_amount contribution_or_distr commitment_id
+
+ibution
+
+01/01/2019 $(1000) contribution 1
+01/01/2020 $2000 distribution 1
+01/01/2019 $(2000) contribution 2
+01/01/2020 $4000 distribution 2
+
+Example:
+This would be the expected result if you were to run the waterfall for commitment_id=1
+on 01/01/2020
+Configurati
+ROC Total Contributions
+Pref 8% IRR
+Catch-up % 100%
+Carried Interest % 20% (i.e. 80/20 split like above)
+
+Tier Name Starting Tier
+Capital
+
+LP
+Allocation
+GP
+Allocation
+
+Total Tier
+Distribution
+
+Remaining
+Capital for
+Next Tier
+
+Return of
+Capital
+
+$2000.00 $1000.00 $1000.00 $1000.00
+
+Preferred
+Return
+
+$1000.00 $80.00 $80.00 $920.00
+
+Catch-up $920.00 $0.00 $20.00 $20.00 $900.00
+Final split
+80/20
+
+$900.00 $720.00 $180.00 $900.00 $0.00
+
+Total $1,800 $200 $2000.00
+
+In the example above we assume a single contribution and a single distribution, in
+reality a fund can have hundreds of transactions for a single investor. In the event of
+having multiple distributions, the waterfall is still run once per investor. The total amount
+flowing through the waterfall is the total sum of distribution for the investo
+
+Technology
+Feel free to develop in any programming language of your choice and leverage
+open-source libraries or tools that you would use in a production environment. We
+recommend using a language you have experience in so that you can showcase your
+best coding abilities.
+
+Application
+Your application should take as input two files commitments.csv, and
+transactions.csv, and produce an output that details how much capital was allocated to
+each tier of the waterfall per investor.
+dataset
+
+Deliverables
+● Please upload your submission as a single ZIP file
+● Please include a README that describes how to run your application
+● Feel free to write as few or as many tests as you feel necessary to ensure your
+application behaves properly for all reasonable scenarios.
+● Please submit production-quality code – it should follow best practices around
+syntax and style, without debug statements.
