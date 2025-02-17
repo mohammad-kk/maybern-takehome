@@ -34,4 +34,4 @@ Place your input files in the src/data/ directory:
   waterfall_data - transactions.csv: Contains contribution and distribution records
 
 4.To Run
-```python src/main.py
+python src/main.py
