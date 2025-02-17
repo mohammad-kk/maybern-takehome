@@ -26,13 +26,12 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 2.Install required packages:
-
 pip install -r requirements.txt
 
-Input Files
+3.Input Files
 Place your input files in the src/data/ directory:
-waterfall_data - commitments.csv: Contains investor commitment details
-waterfall_data - transactions.csv: Contains contribution and distribution records
+  waterfall_data - commitments.csv: Contains investor commitment details
+  waterfall_data - transactions.csv: Contains contribution and distribution records
 
-3.To Run
+4.To Run
 ```python src/main.py
