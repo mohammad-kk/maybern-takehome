@@ -34,6 +34,5 @@ Place your input files in the src/data/ directory:
 waterfall_data - commitments.csv: Contains investor commitment details
 waterfall_data - transactions.csv: Contains contribution and distribution records
 
-3.
-To Run
-python src/main.py
+3.To Run
+```python src/main.py
